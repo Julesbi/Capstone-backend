@@ -1,0 +1,12 @@
+const router= require('express').Router();
+const verify=require('./verifyToken');
+router.get('/',verify,(req,res)=>{
+    res.json({
+        posts:{
+            title:'my first blog',
+            description:'even if you are broken do not be broken of ideas'
+        }
+    });
+});
+
+module.exports= router;
