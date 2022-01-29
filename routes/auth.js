@@ -45,4 +45,43 @@ router.post('/login',async(req,res)=>{
     res.header('auth-token',token).send({message:"logged in successfully", user,token});
     /* res.send('Logged in') */
 });
+// get all users
+router.get('/',async(req,res)=>{
+    try {
+        const users= await User.find();
+        res.json(users);
+    } catch (error) {
+        res.status(500).send(error)
+    }
+});
+router.get('/:id',async(req,res)=>{
+    const {id}= req.params;
+    try {
+        const user= await User.findById(id);
+        res.json(user);
+    } catch (error) {
+        res.status(500).send(error)
+        
+    }
+})
+router.put('/:id',async(req,res)=>{
+    const{id}=req.params;
+    const{name,email}=req.body;
+    try {
+        const user= await User.findOneAndUpdate(id,{name,email},{runValidators:true,new:true});
+        res.json(user)
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
+router.delete('/:id',async(req,res)=>{
+    const{id}=req.params;
+    try {
+        const user= await User.findById(id);
+        await user.remove();
+        res.json('Deleted successfully')
+    } catch (error) {
+        res.status(500).send(error)
+    }
+})
 module.exports= router; 

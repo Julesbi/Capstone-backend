@@ -56,7 +56,7 @@ router.put('/:id',multerMiddleware.single("image"),async(req,res)=>{
             imageUrl:results.url || foundPost.imageUrl,
             cloudinaryId:results.public_id || foundPost.cloudinaryId
         }
-        const post= await postModel.findByIdAndUpdate(id,data);
+        const post= await postModel.findByIdAndUpdate(id,data,{runValidators:true, new:true});
         
         res.json(post)
     } catch (error) {
