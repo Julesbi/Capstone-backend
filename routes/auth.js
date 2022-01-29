@@ -23,9 +23,9 @@ router.post('/register',async(req,res)=>{
     });
     try{
        const savedUser= await user.save();
-       res.status(200).send({message:"created user successfully", user})
+       res.status(200).send({status: 200, message:"created user successfully", user})
     }catch(err){
-        res.status(400).send(err);
+        res.status(400).send({status:400, message:"failed to create a user please try again"});
     }
 }); 
 //LOGIN
