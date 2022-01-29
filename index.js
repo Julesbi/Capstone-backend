@@ -1,11 +1,13 @@
 const express=require('express');
-const app=express();
 const dotenv=require('dotenv');
 const mongoose= require('mongoose');
+
 //impport routes
 const authRoute=require('./routes/auth');
 const blogRoute= require('./routes/blog');
-const cors = require("cors")
+const cors = require("cors");
+
+const app=express();
 dotenv.config();
 
 //connect to DB
