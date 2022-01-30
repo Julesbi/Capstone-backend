@@ -4,15 +4,15 @@ const cloudinary = require("../config/cloudinary");
 const multerMiddleware = require("../middleware/multer");
 const postModel= require('../model/post Model');
 
-// router.get('/',verify,(req,res)=>{
-//     res.json({
-//         posts:{
-//             title:'my first blog',
-//             description:'even if you are broken do not be broken of ideas'
-//         }
-//     });
-// });
-router.post('/',multerMiddleware.single("image"),async(req,res)=>{
+router.get('/',verify,(req,res)=>{
+   res.json({
+        posts:{
+            title:'my first blog',
+           description:'even if you are broken do not be broken of ideas'
+         }
+    });
+});
+router.post('/',verify,multerMiddleware.single("image"),async(req,res)=>{
     const results = await cloudinary.uploader.upload(req.file.path);
 const {title,content}=req.body;
 try {
