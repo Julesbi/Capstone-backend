@@ -4,14 +4,14 @@ const cloudinary = require("../config/cloudinary");
 const multerMiddleware = require("../middleware/multer");
 const postModel= require('../model/post Model');
 
-router.get('/',verify,(req,res)=>{
+/* router.get('/',verify,(req,res)=>{
    res.json({
         posts:{
             title:'my first blog',
            description:'even if you are broken do not be broken of ideas'
          }
     });
-});
+}); */
 router.post('/',verify,multerMiddleware.single("image"),async(req,res)=>{
     const results = await cloudinary.uploader.upload(req.file.path);
 const {title,content}=req.body;
@@ -23,7 +23,7 @@ try {
     
 }
 });
-router.get('/',async(req,res)=>{
+router.get('/',verify,async(req,res)=>{
     try {
         const posts= await postModel.find();
         res.json(posts);
@@ -32,7 +32,7 @@ router.get('/',async(req,res)=>{
     }
 });
 //get one post
-router.get('/:id',async(req,res)=>{
+router.get('/:id',verify,async(req,res)=>{
     const {id}= req.params;
     try {
         const post= await postModel.findById(id);
@@ -43,7 +43,7 @@ router.get('/:id',async(req,res)=>{
     }
 })
 // update
-router.put('/:id',multerMiddleware.single("image"),async(req,res)=>{
+router.put('/:id',verify,multerMiddleware.single("image"),async(req,res)=>{
     try {
         const{id}=req.params;
         const{title,content}=req.body;
@@ -64,7 +64,7 @@ router.put('/:id',multerMiddleware.single("image"),async(req,res)=>{
     }
 })
 //delete
-router.delete('/:id',async(req,res)=>{
+router.delete('/:id',verify,async(req,res)=>{
     const{id}=req.params;
     try {
         const post= await postModel.findById(id);
